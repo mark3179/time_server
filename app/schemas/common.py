@@ -26,4 +26,4 @@ class ApiResponse(BaseModel, Generic[T]):
     code: int = Field(default=0, description="业务状态码，0表示成功")
     message: str = Field(default="success", description="状态信息")
     data: T | None = Field(default=None, description="业务数据")
-    meta: ResponseMeta
+    meta: ResponseMeta | None = Field(default=None, description="响应元信息")

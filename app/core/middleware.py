@@ -19,11 +19,12 @@ class RequestContextMiddleware(BaseHTTPMiddleware):
         elapsed_ms = int((time.time() - start_time) * 1000)
         response.headers["X-Request-Id"] = request_id
         logger.info(
-            "request_id=%s method=%s path=%s status=%s duration_ms=%s",
-            request_id,
-            request.method,
-            request.url.path,
+            # "request_id=%s status=%s method=%s path=%s duration_ms=%s",
+            "status=%s path=%s duration_ms=%s",
+            # request_id,
             response.status_code,
+            # request.method,
+            request.url.path,
             elapsed_ms,
         )
         return response

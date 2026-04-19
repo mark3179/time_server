@@ -18,7 +18,7 @@ def create_app() -> FastAPI:
     register_exception_handlers(app)
 
     @app.get("/health", tags=["health"])
-    async def health_check():
+    def health_check():
         logger.info("health check ok")
         return {"status": "ok"}
 
