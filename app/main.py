@@ -11,11 +11,11 @@ logger = logging.getLogger(__name__)
 
 
 def create_app() -> FastAPI:
-    setup_logging()
+    setup_logging() # 日志函数
     app = FastAPI(title="Time Service API", version="1.0.0")
-    app.add_middleware(RequestContextMiddleware)
-    app.include_router(api_router)
-    register_exception_handlers(app)
+    app.add_middleware(RequestContextMiddleware) # 中间件类
+    app.include_router(api_router) # 包含路由类
+    register_exception_handlers(app) # 注册异常处理函数
 
     @app.get("/health", tags=["health"])
     def health_check():

@@ -7,3 +7,4 @@ class TimeInfoData(BaseModel):
     timestamp_seconds: int = Field(description="当前秒级时间戳")
     timestamp_milliseconds: int = Field(description="当前毫秒级时间戳")
     uuid: str = Field(description="随机UUID")
+    uuid_hex: str = Field(description="UUID去掉-的十六进制字符串")

@@ -16,4 +16,5 @@ class TimeService:
             timestamp_seconds=int(ts),
             timestamp_milliseconds=int(ts * 1000),
             uuid=str(uuid.uuid4()),
+            uuid_hex=str(uuid.uuid4().hex),
         )
