@@ -24,3 +24,9 @@ dist/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Runtime env files
+.env
+
+# Keep template files in repo
+!.env.example

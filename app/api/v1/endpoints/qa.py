@@ -1,8 +1,10 @@
 from datetime import datetime
 import logging
 
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException, Request
+from sqlalchemy.orm import Session
 
+from app.db.mysql import get_db
 from app.schemas.common import ApiResponse, ResponseMeta
 from app.schemas.qa import AskRequest, AskResponseData
 from app.services.qa_service import QAService
@@ -13,7 +15,7 @@ router = APIRouter(prefix="/qa", tags=["qa"])
 
 
 @router.post("/ask", response_model=ApiResponse[AskResponseData], summary="问答接口")
-def ask_question(request: Request, payload: AskRequest):
+def ask_question(request: Request, payload: AskRequest, db: Session = Depends(get_db)):
     query = payload.query
 
     # 用于演示 HTTPException 的触发
@@ -27,7 +29,7 @@ def ask_question(request: Request, payload: AskRequest):
     try:
         # 假设这里是数据库操作
         testprint = "测试try-catch"
-        if testprint == "测试try-catch":
+        if testprint == "测试try-catch" and query == "__db_error__":
             raise HTTPException(status_code=500, detail="Lost connection to DB")  # 真实情况下是不需要手动抛的
     # except HTTPException as e:
     #     # 1. 手动记录日志：因为我们已经捕获了它，全局处理器就不会再记录了
@@ -44,7 +46,7 @@ def ask_question(request: Request, payload: AskRequest):
         # 这样就不会触发全局的“系统繁忙”逻辑，而是返回你指定的这段话
         raise HTTPException(status_code=500, detail="问答服务暂时不可用，我们正在紧急修复")
 
-    data = QAService.answer(query=query)
+    data = QAService.answer(db=db, query=query)
     return ApiResponse[AskResponseData](
         data=data,
         # meta=ResponseMeta(

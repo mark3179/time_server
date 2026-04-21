@@ -7,4 +7,5 @@ class AskRequest(BaseModel):
 
 class AskResponseData(BaseModel):
     query: str = Field(description="原始问题")
-    current_time: str = Field(description="当前本地时间")
+    answer: str = Field(description="回答内容")
+    created_at: str = Field(description="记录时间")

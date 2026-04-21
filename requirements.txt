@@ -1,2 +1,5 @@
-fastapi
+﻿fastapi
 uvicorn
+SQLAlchemy
+PyMySQL
+python-dotenv
