@@ -45,9 +45,15 @@ def register_exception_handlers(app: FastAPI) -> None:
 
     @app.exception_handler(Exception)
     def unhandled_exception_handler(request: Request, exc: Exception):
-        # 1. 将真实的错误堆栈记录到日志，方便程序员排查
-        logger.exception("unhandled exception: %s", exc)
-        
+        # 1. 将真实的错误堆栈记录到日志，方便程序员排查，打印详细的错误信息和堆栈跟踪
+        # logger.error("全局异常处理: %s", exc, exc_info=exc) 
+        # 只简单记录错误信息，不打印堆栈跟踪，堆栈跟踪交给 uvicorn.error   
+        logger.error(
+        "全局异常处理: path=%s type=%s msg=%s",
+        request.url.path,
+        type(exc).__name__,
+        str(exc),
+    )
         # 2. 给前端返回模糊的、友好的提示，保护系统安全
         return JSONResponse(
             status_code=500,

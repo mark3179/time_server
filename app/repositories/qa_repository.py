@@ -50,7 +50,18 @@ class QARepository:
         # for obj in objs:
         #     result.append({"id": obj.id, "query": obj.query, "answer": obj.answer, "created_at": obj.created_at})
         # return result
-        
+
+        # 多条记录列表推导式
+        # objs = db.execute(stmt).scalars().all()
+        # return [
+        #     {
+        #         "id": obj.id,
+        #         "query": obj.query,
+        #         "answer": obj.answer,
+        #         "created_at": obj.created_at,
+        #     }
+        #     for obj in objs
+        # ]
 
     @staticmethod
     def insert(db: Session, query: str, answer: str) -> dict:
