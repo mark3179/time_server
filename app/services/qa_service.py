@@ -15,7 +15,7 @@ class QAService:
         # record = QARepository.get_by_query_orm(db=db, query=query)
 
         if not record:
-            answer_text = f"{query}这是答案"
+            answer_text = f"{query}-这是答案"
 
             # Default: raw SQL insert method
             record = QARepository.insert(db=db, query=query, answer=answer_text)
