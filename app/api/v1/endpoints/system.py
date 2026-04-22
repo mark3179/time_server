@@ -11,9 +11,9 @@ router = APIRouter(prefix="/system", tags=["system"])
 
 @router.get("/time-info", response_model=ApiResponse[TimeInfoData], summary="获取时间、时间戳和UUID")
 def get_time_info(request: Request):
-    data = TimeService.get_time_info()
+    respose_data = TimeService.get_time_info()
     return ApiResponse[TimeInfoData](
-        data=data,
+        data=respose_data,
         # meta=ResponseMeta(
         #     request_id=request.state.request_id,
         #     timestamp=datetime.now(),

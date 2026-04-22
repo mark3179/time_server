@@ -15,8 +15,14 @@ class QAService:
         # record = QARepository.get_by_query_orm(db=db, query=query)
 
         if not record:
-            answer_text = f"{query}\u8fd9\u662f\u7b54\u6848"
+            answer_text = f"{query}这是答案"
+
+            # Default: raw SQL insert method
             record = QARepository.insert(db=db, query=query, answer=answer_text)
+
+            # If you want to switch to ORM insert method, comment the line above
+            # and uncomment the next line.
+            # record = QARepository.insert_orm(db=db, query=query, answer=answer_text)
 
         return AskResponseData(
             query=record["query"],

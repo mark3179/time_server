@@ -45,9 +45,9 @@ def ask_question(request: Request, payload: AskRequest, db: Session = Depends(ge
         # 全局异常处理
         raise
 
-    data = QAService.answer(db=db, query=query)
+    respose_data = QAService.answer(db=db, query=query)
     return ApiResponse[AskResponseData](
-        data=data,
+        data=respose_data,
         # meta=ResponseMeta(
         #     request_id=request.state.request_id,
         #     timestamp=datetime.now(),

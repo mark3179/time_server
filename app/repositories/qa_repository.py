@@ -23,7 +23,7 @@ class QARepository:
         return dict(row) if row else None
 
         # 多条记录
-        # rows= db.execute(sql, {"query": query}).mappings().all()
+        # rows = db.execute(sql, {"query": query}).mappings().all()
         # return [dict(row) for row in rows]
 
     @staticmethod
@@ -88,4 +88,25 @@ class QARepository:
             "query": query,
             "answer": answer,
             "created_at": now,
+        }
+
+    @staticmethod
+    def insert_orm(db: Session, query: str, answer: str) -> dict:
+        now = datetime.now()
+        qa_id = str(uuid4())
+
+        obj = QAModel(
+            id=qa_id,
+            query=query,
+            answer=answer,
+            created_at=now,
+        )
+        db.add(obj)
+        db.commit()
+
+        return {
+            "id": obj.id,
+            "query": obj.query,
+            "answer": obj.answer,
+            "created_at": obj.created_at,
         }
