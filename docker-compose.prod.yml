@@ -1,0 +1,27 @@
+services:
+  app:
+    image: ${APP_IMAGE:-your-registry/time-service:latest}
+    container_name: time-service
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+
+  mysql:
+    image: mysql:8.0
+    container_name: time-service-mysql
+    profiles:
+      - local-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD:-change_me}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-time_service}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./sql/mysql_init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+
+volumes:
+  mysql_data:
